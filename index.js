@@ -7,6 +7,9 @@ const dotenv = require('dotenv');
 dotenv.config();
 const port = process.env.SERVER_PORT || 3000;
 
+const bookRoute = require('./routes/book.route');
+const categoryRoute = require('./routes/category.route');
+
 const app = express();
 app.use(cors());
 app.use(bodyParser.json());
@@ -17,6 +20,8 @@ app.get('/', (req, res) => {
 });
 
 
+app.use("/api/v1/books",bookRoute);
+app.use("/api/v1/categories", categoryRoute);
 
 mongoose.connect(`mongodb://${process.env.DB_HOST}:${process.env.DB_PORT}/${process.env.DB_NAME}`, {
     useNewUrlParser: true,

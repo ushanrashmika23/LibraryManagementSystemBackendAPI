@@ -7,6 +7,7 @@ const memberScema = new mongoose.Schema({
     address: { type: String, required: true },
     joined_date: { type: Date, default: Date.now },
     membership_id: { type: String, required: true, unique: true },
+    reservation: { type: Number, default: 0 },
     is_active: { type: Boolean, default: true },
     is_verified: { type: Boolean, default: false },
     borrowed_books: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Book',default: [] }],

@@ -15,32 +15,34 @@ const getBookById = async (req, res) => {
     }
 }
 const createBook = async (req, res) => {
-
     try {
-        if (!req.body.title || !req.body.isbn || !req.body.author || !req.body.category) {
-            return res.status(400).json({ code: 400, message: "Bad Request", data: "Title, ISBN, Author, and Category fields are required" });
+        const { title, isbn, author, category } = req.body;
+        if (!title || !isbn || !author || !category) {
+            return res.status(400).json({
+                code: 400,
+                message: "Bad Request",
+                data: "Title, ISBN, Author, and Category fields are required"
+            });
         }
+
         const newBook = await book.create({
-            title: req.body.title,
-            isbn: req.body.isbn,
-            author: req.body.author,
-            category: req.body.category,
-            available_copies: req.body.available_copies || 1,
-            total_copies: req.body.total_copies || 1,
+            title,
+            isbn,
+            author,
+            category,
+            status: req.body.status || 'Available',
             description: req.body.description || '',
             published: req.body.published || new Date().getFullYear(),
             cover_image: req.body.cover_image || ''
         });
-        newBook.save();
+
         return res.status(201).json({ code: 201, message: "Book created successfully", data: newBook });
     } catch (error) {
         console.error('Error creating book:', error);
         return res.status(500).json({ code: 500, message: "Internal Server Error", data: error.message });
     }
+};
 
-
-
-}
 const updateBook = async (req, res) => {
     if (!req.body.title || !req.body.isbn || !req.body.author || !req.body.category) {
         return res.status(400).json({ code: 400, message: "Bad Request", data: "Title, ISBN, Author, and Category fields are required" });

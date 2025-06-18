@@ -4,7 +4,7 @@ const authorSchema = new mongoose.Schema({
     name:{ type: String, required: true },
     bio: { type: String, default: '' },
     birth_date: { type: Date },
-    nationslity: { type: String, default: '' },
+    nationality: { type: String, default: '' },
 
 });
 
